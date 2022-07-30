@@ -222,10 +222,10 @@ class IndexController extends Controller
     }
     public function profile($id)
     {
-        $users = User::find($id);
+        // $users = User::find($id);
         $categories = CategoryProduct::where('status', 0)->get();
         $brands = Brand::where('status', 0)->get();
-        return view('page.profile', compact('categories','brands','users'));
+        return view('page.profile', compact('categories','brands'));
     }
 }
 
