@@ -12,6 +12,7 @@ use App\Models\LikeProduct;
 use App\Models\Product;
 use App\Models\Rating;
 use App\Models\Slider;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -221,9 +222,10 @@ class IndexController extends Controller
     }
     public function profile($id)
     {
+        $users = User::find($id);
         $categories = CategoryProduct::where('status', 0)->get();
         $brands = Brand::where('status', 0)->get();
-        return view('page.profile', compact('categories','brands'));
+        return view('page.profile', compact('categories','brands','users'));
     }
 }
 

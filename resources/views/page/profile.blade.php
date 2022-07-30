@@ -3,7 +3,7 @@
 <section>
     <div class="container">
         <div class="row">
-            @include('page.layouts.menu')
+            dấdasdad
             
             
         </div>

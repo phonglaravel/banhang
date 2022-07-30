@@ -42,7 +42,7 @@ Route::get('/search', [IndexController::class, 'search'])->name('page.search');
 Route::get('/tags/{tukhoa}', [IndexController::class, 'tags'])->name('page.tags');
 Route::post('/post-rating', [IndexController::class, 'rating'])->name('rating');
 Route::post('/like', [IndexController::class, 'like'])->name('like');
-Route::get('/profile/{id}', [IndexController::class, 'profile'])->name('page.profile');
+Route::get('/quan-ly-tai-khoan/{id}', [IndexController::class, 'profile'])->name('page.profile');
 
 
 
