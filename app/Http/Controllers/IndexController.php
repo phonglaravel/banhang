@@ -219,5 +219,11 @@ class IndexController extends Controller
         }
         
     }
+    public function profile($id)
+    {
+        $categories = CategoryProduct::where('status', 0)->get();
+        $brands = Brand::where('status', 0)->get();
+        return view('page.profile', compact('categories','brands'));
+    }
 }
 

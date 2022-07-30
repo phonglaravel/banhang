@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2022 at 07:09 AM
+-- Generation Time: Jul 30, 2022 at 08:18 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -575,9 +575,9 @@ CREATE TABLE `slider` (
 --
 
 INSERT INTO `slider` (`id`, `name`, `description`, `image`, `status`) VALUES
-(2, 'Duy Phong', 'Phong đẹp trai nhất trái đất', '_VmbFi.jpg', 0),
-(3, 'Duy Thái', 'ấdasdasdasdasdasdasd', '_RLnW4.jpg', 0),
-(4, 'Baaaaaaaaaaaa', 'asdasdasdasdsaasd sdasdasdasdas adasdasdasdas', '_qees5.jpg', 0);
+(2, 'Túi xách 99% rẻ đẹp', 'Túi xách hàng hiệu đã qua sử dụng đẹp', '_VmbFi.jpg', 0),
+(3, 'Loạt túi xách đủ màu sắc', 'Hàng mới về túi xách hàng hiệu đủ màu sắc', '_RLnW4.jpg', 0),
+(4, 'Túi xách hot nhất 2022', 'Là một chiếu túi xách cho phái nữ rất rẻ nhưng lại rất bền và đẹp', '_qees5.jpg', 0);
 
 -- --------------------------------------------------------
 
