@@ -36,8 +36,8 @@
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             @if (Auth::check())
-                            <li><a href="#"><i class="fa fa-user"></i> {{Auth::user()->name}}</a></li>
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                            <li><a href="{{route('page.profile')}}"><i class="fa fa-user"></i> {{Auth::user()->name}}</a></li>
+                            <li><a href="{{route('page.yeuthich')}}"><i class="fa fa-star"></i> Yêu thích</a></li>
                             @endif
                             
                             

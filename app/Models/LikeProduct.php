@@ -10,4 +10,7 @@ class LikeProduct extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'like_product';
+    public function product(){
+        return $this->belongsTo(Product::class,'product_id','id');
+    }
 }

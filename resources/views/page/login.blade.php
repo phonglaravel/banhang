@@ -14,7 +14,7 @@
                             <input type="checkbox" class="checkbox"> 
                             Ghi nhớ tài khoản
                         </span>
-                        <button type="submit" class="btn btn-default">Đăng nhập</button>
+                        <button name="page" type="submit" class="btn btn-default">Đăng nhập</button>
                     </form>
                 </div><!--/login form-->
             </div>

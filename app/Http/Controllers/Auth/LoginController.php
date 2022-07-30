@@ -29,6 +29,8 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected $loginPath = '/login-checkout';
+    protected $redirectPath = '/home';
 
     /**
      * Create a new controller instance.
@@ -64,8 +66,12 @@ class LoginController extends Controller
                 return redirect()->route('page.index');
             }
         }else{
-            return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+            if (isset($_POST['page'])) {
+                return redirect('/login-checkout');
+            } else {
+                return redirect()->route('login');
+            }
+            
         }
           
     }

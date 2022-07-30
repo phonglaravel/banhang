@@ -9,13 +9,16 @@ use App\Models\CategoryProduct;
 use App\Models\CommentBlog;
 use App\Models\CommentProduct;
 use App\Models\LikeProduct;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Rating;
+use App\Models\Shipping;
 use App\Models\Slider;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
 {
@@ -220,12 +223,45 @@ class IndexController extends Controller
         }
         
     }
-    public function profile($id)
+    public function profile()
     {
-        // $users = User::find($id);
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $older1 = Order::where('user_id',$id)->whereNotIn('status',['Đã hoàn thành','Trả lại tạm giữ','Hủy đơn'])->orderBy('id','DESC')->get();
+        $older2 = Order::where('user_id',$id)->whereIn('status',['Đã hoàn thành','Trả lại tạm giữ','Hủy đơn'])->orderBy('id','DESC')->take(10)->get();
+        $ship = Shipping::where('user_id',$id)->get();
         $categories = CategoryProduct::where('status', 0)->get();
         $brands = Brand::where('status', 0)->get();
-        return view('page.profile', compact('categories','brands'));
+        return view('page.profile', compact('categories','brands','user','ship','older1','older2'));
+    }
+    public function update(Request $request,$id)
+    {
+        
+        $user = User::find($id);
+        if(Hash::check($request->pass,$user->password )){
+            $user->name = $request->name;
+            $user->phone = $request->phone;
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return back()->with('success','Cập nhật thành công');
+        }else{
+            return back()->with('error','Mật khẩu cũ không đúng');
+        }
+        
+
+    }
+    public function yeuthich()
+    {
+        $id = Auth::user()->id;
+        $like = LikeProduct::where('user_id',$id)->get();
+        $products = [];
+        foreach($like as $item){
+            $pro = Product::find($item->product_id);
+            $products[] = $pro;
+        }
+        $categories = CategoryProduct::where('status', 0)->get();
+        $brands = Brand::where('status', 0)->get();
+        return view('page.like',compact('products','categories','brands'));
     }
 }
 
