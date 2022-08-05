@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', [IndexController::class, 'index'])->name('page.index');
 Route::get('/danh-muc-san-pham/{slug}/{slugcon}', [IndexController::class, 'category'])->name('page.category');
@@ -49,32 +50,36 @@ Route::get('/yeu-thich', [IndexController::class, 'yeuthich'])->name('page.yeuth
 
 
 
-Auth::routes();
 
-Route::get('/admin', [App\Http\Controllers\HomeController::class, 'admincp'])->name('admin')->middleware('level');
+Route::prefix('admin')->middleware('level','auth')->group(function(){
+    
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'admincp'])->name('admin');
+    Route::resource('category-product', CategoryProductController::class);
+    Route::resource('category', CategoryController::class);
+    Route::resource('brand', BrandController::class);
+    Route::resource('/product', ProductController::class);
+    Route::resource('/coupon', CouponController::class);
+    Route::resource('/slider', SliderController::class);
+    Route::resource('/blog', BlogController::class);
+    Route::get('/order',[OrderControlller::class, 'index'])->name('order.index');
+    Route::get('/order/edit/{id}',[OrderControlller::class, 'edit'])->name('order.edit');
+    Route::put('/order/update/{id}',[OrderControlller::class, 'update'])->name('order.update');
+    Route::delete('/order/destroy/{id}',[OrderControlller::class, 'destroy'])->name('order.destroy');
+    Route::get('/phiship',[OrderControlller::class, 'phiship'])->name('phiship.index');
+    Route::post('/editphivanchuyen',[OrderControlller::class, 'editphivanchuyen'])->name('editphivanchuyen');
+    Route::put('/un-cate-pro/{id}',[CategoryProductController::class, 'un_cate_pro'])->name('un_cate_pro');
+    Route::put('/act-cate-pro/{id}',[CategoryProductController::class, 'act_cate_pro'])->name('act_cate_pro');
+    Route::put('/un-brand/{id}', [BrandController::class, 'un_brand'])->name('un_brand');
+    Route::put('/act-brand/{id}', [BrandController::class, 'act_brand'])->name('act_brand');
+    Route::put('/un-product/{id}', [ProductController::class, 'un_product'])->name('un_product');
+    Route::put('/act-product/{id}', [ProductController::class, 'act_product'])->name('act_product');
+});
 
-Route::resource('/admin/category-product', CategoryProductController::class)->middleware('level');
-Route::resource('/admin/category', CategoryController::class)->middleware('level');
-Route::resource('/admin/brand', BrandController::class)->middleware('level');
-Route::resource('/admin/product', ProductController::class)->middleware('level');
-Route::resource('/admin/coupon', CouponController::class)->middleware('level');
-Route::resource('/admin/slider', SliderController::class)->middleware('level');
-Route::resource('/admin/blog', BlogController::class)->middleware('level');
-
-Route::get('admin/order',[OrderControlller::class, 'index'])->name('order.index')->middleware('level');;
-Route::get('admin/order/edit/{id}',[OrderControlller::class, 'edit'])->name('order.edit')->middleware('level');;
-Route::put('admin/order/update/{id}',[OrderControlller::class, 'update'])->name('order.update')->middleware('level');;
-Route::delete('admin/order/destroy/{id}',[OrderControlller::class, 'destroy'])->name('order.destroy')->middleware('level');;
-Route::get('/admin/phiship',[OrderControlller::class, 'phiship'])->name('phiship.index')->middleware('level');;
-Route::post('/editphivanchuyen',[OrderControlller::class, 'editphivanchuyen'])->name('editphivanchuyen')->middleware('level');;
 
 
-Route::put('/un-cate-pro/{id}',[CategoryProductController::class, 'un_cate_pro'])->name('un_cate_pro');
-Route::put('/act-cate-pro/{id}',[CategoryProductController::class, 'act_cate_pro'])->name('act_cate_pro');
-Route::put('/un-brand/{id}', [BrandController::class, 'un_brand'])->name('un_brand');
-Route::put('/act-brand/{id}', [BrandController::class, 'act_brand'])->name('act_brand');
-Route::put('/un-product/{id}', [ProductController::class, 'un_product'])->name('un_product');
-Route::put('/act-product/{id}', [ProductController::class, 'act_product'])->name('act_product');
+
+
+
 
 Route::post('/savecart/{id}',[CartController::class, 'savecart'])->name('savecart');
 Route::get('/showcart',[CartController::class, 'showcart'])->name('showcart');
