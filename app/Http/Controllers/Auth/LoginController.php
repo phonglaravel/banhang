@@ -29,8 +29,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
-    protected $loginPath = '/login-checkout';
-    protected $redirectPath = '/home';
+    
 
     /**
      * Create a new controller instance.
@@ -46,6 +45,10 @@ class LoginController extends Controller
           
     
     public function logout(Request $request) {
+        if(Auth::user()->level==1){
+            Auth::logout();
+            return redirect('/login');
+        }
         Auth::logout();
         return redirect('/');
     }
@@ -65,7 +68,8 @@ class LoginController extends Controller
             }else{
                 return redirect()->route('page.index');
             }
-        }else{
+        }
+        else{
             if (isset($_POST['page'])) {
                 return redirect('/login-checkout');
             } else {

@@ -102,7 +102,8 @@ class CartController extends Controller
     }
     public function coupon(Request $request)
     {
-        $coupon = Coupon::orderBy('id','DESC')->where('coupon',$request->coupon)->first();
+        if(Auth::check()){
+            $coupon = Coupon::orderBy('id','DESC')->where('coupon',$request->coupon)->first();
         $user_coupon = UserCoupon::where('user_id',Auth::user()->id)->where('coupon_id',$coupon->id)->first();
         $today = Carbon::now('Asia/Ho_Chi_Minh')->format('d/m/Y');
         if($coupon){
@@ -139,6 +140,9 @@ class CartController extends Controller
             
         }else{
             return back()->with('success','Mã giảm giá không đúng');
+        }
+        }else{
+            return redirect('/login-checkout');
         }
     }
     public function deletesession()
