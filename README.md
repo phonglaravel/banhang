@@ -4,3 +4,4 @@
 -import csdl vào mysql
 -sửa file .env
 -php artisan key:generate
+/admin (admin@gmail.com 12131415)
