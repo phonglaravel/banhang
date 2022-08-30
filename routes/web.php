@@ -46,7 +46,8 @@ Route::post('/like', [IndexController::class, 'like'])->name('like');
 Route::get('/tai-khoan', [IndexController::class, 'profile'])->name('page.profile');
 Route::put('updateuser/{id}',[IndexController::class,'update'])->name('user.update');
 Route::get('/yeu-thich', [IndexController::class, 'yeuthich'])->name('page.yeuthich');
-
+Route::post('/like-product/{product_id}/{user_id}', [IndexController::class, 'like_product'])->name('like_product');
+Route::post('/dislike-product/{product_id}/{user_id}', [IndexController::class, 'dislike_product'])->name('dislike_product');
 
 
 

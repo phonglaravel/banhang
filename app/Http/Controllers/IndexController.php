@@ -140,14 +140,19 @@ class IndexController extends Controller
         $categories = CategoryProduct::where('status', 0)->get();
         $brands = Brand::where('status', 0)->get();
         $product = Product::where('slug_product',$slug)->first();
-        $rating = Rating::where('product_id',$product->id)->avg('rating');
+        if(Auth::check()){
+            $like = LikeProduct::where('product_id',$product->id)->where('user_id',Auth::user()->id)->first();
+        }else{
+            $like = '';
+        }
         
+        $rating = Rating::where('product_id',$product->id)->avg('rating');        
         $rating = round($rating);
         $comment = CommentProduct::orderBy('id','DESC')->where('product_id', $product->id)->get();
         $url = $request->url();
         $producs_brand = Product::where('brand_id',$product->brand_id)->whereNotIn('id',[$product->id])->take(8)->get();
         $producs_category = Product::where('category_id',$product->category_id)->whereNotIn('id',[$product->id])->take(8)->get();
-        return view('page.product',compact('rating','comment','url','categories','brands','product','producs_brand','producs_category'));
+        return view('page.product',compact('rating','comment','url','categories','brands','product','producs_brand','producs_category','like'));
     }
    
     public function contact()
@@ -262,6 +267,22 @@ class IndexController extends Controller
         $categories = CategoryProduct::where('status', 0)->get();
         $brands = Brand::where('status', 0)->get();
         return view('page.like',compact('products','categories','brands'));
+    }
+    public function like_product($product_id, $user_id)
+    {
+        $like = new LikeProduct();
+        $like->product_id =  $product_id;
+        $like->user_id =  $user_id;
+        $like->save();
+        return back();
+
+    }
+    public function dislike_product($product_id, $user_id)
+    {
+        $like = LikeProduct::where('product_id',$product_id)->where('user_id',$user_id)->first();
+        $like->delete();
+        return back();
+
     }
 }
 

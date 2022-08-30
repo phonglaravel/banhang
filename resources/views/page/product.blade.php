@@ -89,6 +89,20 @@
                             <p><b>Điều kiện:</b> Mới 100%</p>
                             <p><b>THương hiệu:</b> {{$product->brand->title}}</p>
                             <p><b>Danh mục:</b> {{$product->categoryproduct->title}}</p>
+                            @if (Auth::check())
+                            @if ($like==null)
+                            <form action="{{route('like_product',[$product->id,Auth::user()->id])}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Thích</button>
+                            </form>
+                            
+                            @else 
+                            <form action="{{route('dislike_product',[$product->id,Auth::user()->id])}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Bỏ thích</button>
+                            </form>
+                            @endif
+                            @endif
                             <p><b>Tags:</b> 
                                 @if ($product->tags!=NULL)
                            @php
